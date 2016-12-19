@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="com.mysql.jdbc.Driver" />
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/loginDatabase" />
+        <property name="user" value="root" />
+
+        <!-- c3p0 database connection pool management properties -->
+
+        <property name="minPoolSize" value="1" />
+        <property name="maxPoolSize" value="10" />
+        <property name="acquireIncrement" value="1" />
+        <property name="maxStatements" value="0" />
+
+        <!-- destroy idle pool after 300ms -->
+        <property name="idleConnectionTestPeriod" value="300" />
+
+        <!-- destroy database connection if it fails to login after 7200 ms -->
+        <property name="loginTimeout" value="7200" />
+
+
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.current_session_context_class">thread</prop>
+                <!-- <prop key="hibernate.hbm2ddl.auto">create</prop> Deletes the database each time the program runs -->
+            </props>
+        </property>
+
+        <property name="mappingResources">
+            <list>
+                <value>users_login.hbm.xml</value>
+                <!-- <value>role.hbm.xml</value> -->
+            </list>
+        </property>
+    </bean>
+
+    <bean id="hibernateSessionManager" class="org.academiadecodigo.mavenlogin.persistence.hibernate.HibernateSessionManager">
+        <constructor-arg name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="hibernateTransactionManager" class="org.academiadecodigo.mavenlogin.persistence.hibernate.HibernateTransactionManager">
+        <constructor-arg name="hibernateSessionManager" ref="hibernateSessionManager"/>
+    </bean>
+
+</beans>

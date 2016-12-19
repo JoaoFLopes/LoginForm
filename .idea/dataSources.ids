@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - loginDatabase@localhost" uuid="3df237ff-238f-4dd5-97ec-5e50665ed70f">
+    <database-info product="MySQL" version="5.7.11" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="mixed" quoted-identifiers="upper"/>
+    <database-model serializer="dbm" rdbms="MYSQL" format-version="2.5">
+      <schema id="1" name="loginDatabase"/>
+      <table id="2" parent="1" name="users">
+        <comment>User Table :3</comment>
+      </table>
+      <table id="3" parent="1" name="users_login"/>
+      <table id="4" parent="1" name="roles"/>
+      <column id="5" parent="2" name="username">
+        <mandatory>1</mandatory>
+        <data-type>char(30)</data-type>
+      </column>
+      <column id="6" parent="2" name="password">
+        <data-type>char(30)</data-type>
+      </column>
+      <column id="7" parent="2" name="email">
+        <data-type>char(50)</data-type>
+      </column>
+      <key id="8" parent="2" name="PRIMARY">
+        <columns>username</columns>
+        <primary>1</primary>
+      </key>
+      <column id="9" parent="3" name="id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+        <sequence-identity>1</sequence-identity>
+      </column>
+      <column id="10" parent="3" name="username">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="11" parent="3" name="password">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="12" parent="3" name="email">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="13" parent="3" name="id_role">
+        <data-type>int(11)</data-type>
+      </column>
+      <index id="14" parent="3" name="users_login_roles_id_role_fk">
+        <columns>id_role</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="15" parent="3" name="PRIMARY">
+        <columns>id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="16" parent="3" name="users_login_roles_id_role_fk">
+        <columns>id_role</columns>
+        <ref-key>~.roles.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="17" parent="4" name="id_role">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="18" parent="4" name="type_role">
+        <data-type>int(11)</data-type>
+      </column>
+      <key id="19" parent="4" name="PRIMARY">
+        <columns>id_role</columns>
+        <primary>1</primary>
+      </key>
+    </database-model>
+  </data-source>
+</component>
